@@ -19,6 +19,7 @@ function getParams(&$sum,&$interest,&$time){
 
 //walidacja parametrów z przygotowaniem zmiennych dla widoku
 function validate(&$sum,&$interest,&$time,&$messages){
+	global $role;
 	// sprawdzenie, czy parametry zostały przekazane
 	if ( ! (isset($sum) && isset($interest) && isset($time))) {
 		// sytuacja wystąpi kiedy np. kontroler zostanie wywołany bezpośrednio - nie z formularza
@@ -52,13 +53,15 @@ if ( $time == "") {
 	if (! is_numeric( $time )) {
 		$messages [] = 'Czas trwania nie jest liczbą całkowitą';
 	}
-
+	if ($sum > 150000 && $role = 'user' {
+	    $messages [] = 'Musisz byc adminem zeby obliczyc rate kwoty wyzszej niz 150 tysiecy';
+	}    
 	if (count ( $messages ) != 0) return false;
 	else return true;
 }
 
 function process(&$sum,&$interest,&$time,&$messages,&$result,&$rata){
-	global $role;
+	
 	
 	//konwersja parametrów na int
 	$sum = intval($sum);
